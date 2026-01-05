@@ -1,0 +1,228 @@
+### READ ME !!  
+### Replace the value of the variable LAP__ID below
+### with the value of "_id" in the response to request 1, 
+@LAP_ID = 6958b77e97803a281518a25a
+
+
+### DON'T change this value:
+@NON_EXISTENT_LAP_ID = 369b336b8c8867f2cc165159
+
+
+### 1: CREATE a lap
+### Status Code: 201
+### Body: JSON object for the newly created lap. Must be an object, not an array
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584ea973190aee8425e2ce",
+    "date": "2025-08-27",
+    "weightAmLb": 202.6,
+    "steps": 8204,
+    "workout": "walk",
+    "calories": 1450,
+    "proteinG": 74,
+    "sleepHours": 10,
+    "adherence": true,
+    "notes": "Downtown Disney"
+}
+
+### Did you remember to copy the ID value 
+### to the top variable on line 4?
+
+
+
+### 2: CREATE another lap
+### Status Code: 201
+### Body: JSON object for the newly created lap
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584e8173190aee8425e2cd",
+    "date": "2026-01-02",
+    "weightAmLb": 169.1,
+    "steps": 6847,
+    "workout": "walk",
+    "calories": 1250,
+    "proteinG": 60,
+    "sleepHours": 9,
+    "adherence": false,
+    "notes": "Downtown Disney"
+}
+
+### 3: CREATE another lap
+### Status Code: 201
+### Body: JSON object for the newly created lap
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584ea973190aee8425e2ce",
+    "date": "2026-01-02",
+    "weightAmLb": 202.6,
+    "steps": 8204,
+    "workout": "walk",
+    "calories": 1450,
+    "proteinG": 74,
+    "sleepHours": 10,
+    "adherence": true,
+    "notes": "Downtown Disney"
+}
+
+### 4: CREATE a lap
+### Status Code: 201
+### Body: JSON object for the newly created lap
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584e8173190aee8425e2cd",
+    "date": "2026-01-01",
+    "weightAmLb": 169.1,
+    "steps": 5000,
+    "workout": "walk",
+    "calories": 1750,
+    "proteinG": 44,
+    "sleepHours": 8,
+    "adherence": false,
+    "notes": "New Years"
+}
+
+### 5: INVALID request for lap creation
+### Status Code: 400
+### Body: {"Error": "Invalid request"}
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584e8173190aee8425e2cd",
+    "date": "2026-01-01",
+    "weightAmLb": 169.1,
+    "steps": 5000,
+    "workout": "walking",
+    "calories": 1750,
+    "proteinG": 44,
+    "sleepHours": 8,
+    "adherence": false,
+    "notes": "New Years"
+}
+
+### 6: INVALID request for lap creation (not a number)
+### Status Code: 400
+### Body: {"Error": "Invalid request"}
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584e8173190aee8425e2cd",
+    "date": "2026-01-01",
+    "weightAmLb": false,
+    "steps": 5000,
+    "workout": "walking",
+    "calories": 1750,
+    "proteinG": 44,
+    "sleepHours": 8,
+    "adherence": false,
+    "notes": "New Years"
+}
+
+
+### 7: INVALID request for lap creation (date is incomplete)
+### Status Code: 400
+### Body: {"Error": "Invalid request"}
+POST http://localhost:3000/laps HTTP/1.1
+content-type: application/json
+
+{
+    "date": "2026-01-01",
+    "weightAmLb": 169.1,
+    "steps": 5000,
+    "workout": "walking",
+    "calories": 1750,
+    "proteinG": 44,
+    "sleepHours": 8,
+    "adherence": false,
+    "notes": "New Years"
+}
+
+### 8: RETRIEVE all 4 documents
+### Status Code: 200 
+### Body: A JSON array with the 4 objects, one for each exercise we created
+GET http://localhost:3000/laps HTTP/1.1
+
+
+
+### 9: RETRIEVE Deadlift from first post's ID
+### Status Code: 200
+### Body: JSON object with all properties. reps 12, weight 30, unit kgs
+GET  http://localhost:3000/laps/{{LAP_ID}} HTTP/1.1
+
+
+
+### 10: RETRIEVE for non-existent ID
+### Status Code: 404
+### Body: {"Error": "Not found"}
+GET  http://localhost:3000/laps/{{NON_EXISTENT_LAP_ID}} HTTP/1.1
+
+
+
+### 11: UPDATE the first Lap post: 
+###     steps to 10000 
+### Status Code: 200
+### Body: JSON object with all properties. 
+PUT http://localhost:3000/laps/{{LAP_ID}} HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584e8173190aee8425e2cd",
+    "date": "2026-01-01",
+    "weightAmLb": 169.1,
+    "steps": 10000,
+    "workout": "walk",
+    "calories": 1750,
+    "proteinG": 44,
+    "sleepHours": 8,
+    "adherence": false,
+    "notes": "New Years"
+}
+
+### 12: VERIFY the previous update
+### Status Code: 200
+### Body: JSON object with all properties (shown in #11)
+GET http://localhost:3000/laps/{{LAP_ID}} HTTP/1.1
+
+
+### 13: INVALID request for lap update (not a number)
+### Status Code: 400
+### Body: {"Error": "Invalid request"}
+PUT http://localhost:3000/laps/{{LAP_ID}} HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "69584e8173190aee8425e2cd",
+    "date": "2026-01-01",
+    "weightAmLb": false,
+    "steps": 10000,
+    "workout": "walk",
+    "calories": 1750,
+    "proteinG": 44,
+    "sleepHours": 8,
+    "adherence": false,
+    "notes": "New Years"
+}
+
+
+### 14 and 15: DELETE the Lap post
+### Status Code: 204 status code
+### Body: empty  then request again to see "Not Found"
+DELETE http://localhost:3000/laps/{{LAP_ID}} HTTP/1.1
+
+
+
+### 16: VERIFY lap was deleted (3 remain)
+### Status Code: 200
+### Body: Array must contain 3 exercises and must not contain the Deadlift document
+GET http://localhost:3000/laps HTTP/1.1
+
+

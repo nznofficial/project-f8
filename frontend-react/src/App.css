@@ -1,0 +1,32 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #282c34;
+}
+
+.app {
+  background-color: #8ab1ff;
+  color: rgb(255, 126, 126);
+}
+
+
+.collection-container {
+  border: 6px solid rgb(0, 255, 136);
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.collection-item {
+  border: 2px solid rgb(202, 200, 89);
+  border-radius: 8px;
+  width: 600px;
+  margin-top: 16px;
+  display: flex;
+}
+
+a {
+  color: white;
+}

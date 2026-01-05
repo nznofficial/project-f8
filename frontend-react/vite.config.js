@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/exercises': {
+      '/laps': {
       target: 'http://localhost:3000'
       } 
     }

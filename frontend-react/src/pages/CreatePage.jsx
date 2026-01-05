@@ -7,10 +7,10 @@ export const CreatePage = () => {
     const [date, setDate] = useState('');
     const [weightAmLb, setWeightAmLb] = useState('');
     const [steps, setSteps] = useState(0);
-    const [workout, setWorkout] = useState('walk');
-    const [calories, setCalories] = useState(0);
-    const [proteinG, setProteinG] = useState(0);
-    const [sleepHours, setSleepHours] = useState(0);
+    const [workout, setWorkout] = useState('rest');
+    const [calories, setCalories] = useState('');
+    const [proteinG, setProteinG] = useState('');
+    const [sleepHours, setSleepHours] = useState('');
     const [notes, setNotes] = useState('');
 
     const navigate = useNavigate();
@@ -71,7 +71,7 @@ export const CreatePage = () => {
                             max="500"
                             value={weightAmLb}
                             placeholder="Enter weight here"
-                            onChange={e => setWeightAmLb(e.target.value)}/>
+                            onChange={e => setWeightAmLb(e.target.valueAsNumber)}/>
                     </label>
                 </p>
                 <p>
@@ -127,7 +127,7 @@ export const CreatePage = () => {
                             type="number"
                             min="0"
                             max="24"
-                            value={calories}
+                            value={sleepHours}
                             placeholder="Enter sleep hours here"
                             onChange={e => setSleepHours(e.target.valueAsNumber)}/>
                     </label>
@@ -139,7 +139,7 @@ export const CreatePage = () => {
                             type="text"
                             value={notes}
                             placeholder="Enter notes here"
-                            onChange={e => setNotes(e.target.valueAsNumber)}/>
+                            onChange={e => setNotes(e.target.value)}/>
                     </label>
                 </p>
                 <button type="submit">Create</button>

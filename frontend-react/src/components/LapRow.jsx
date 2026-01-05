@@ -2,7 +2,6 @@ import '../App.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function LapRow({ lap, onDelete, onUpdate }) {
-
     return (
         <tr>
             <td>{lap.userId}</td>
@@ -17,7 +16,6 @@ function LapRow({ lap, onDelete, onUpdate }) {
             <td><FaEdit onClick={() => onUpdate(lap)}/>&nbsp;
                 <FaTrash onClick={()=> onDelete(lap._id)}/>
             </td>
-
         </tr>
     );
 }

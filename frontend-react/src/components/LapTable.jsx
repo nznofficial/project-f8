@@ -7,17 +7,15 @@ function LapTable({ laps, onDelete, onUpdate}) {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Reps</th>
-                        <th>Weight</th>
-                        <th>Unit</th>
                         <th>Date</th>
                         <th>Weight</th>
                         <th>Steps</th>
                         <th>Workout</th>
                         <th>Calories</th>
                         <th>Protein</th>
-                        <th>sleepHours</th>
+                        <th>Sleep</th>
                         <th>Notes</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

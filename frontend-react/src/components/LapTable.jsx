@@ -1,6 +1,6 @@
-import ExerciseRow from './ExerciseRow';
+import LapRow from './LapRow';
 
-function ExerciseTable({ exercises, onDelete, onUpdate}) {
+function LapTable({ laps, onDelete, onUpdate}) {
     return (
         <div className="collection-container">
             <table>
@@ -15,12 +15,12 @@ function ExerciseTable({ exercises, onDelete, onUpdate}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {exercises.map((exercise) => <ExerciseRow exercise={exercise} 
-                    onDelete={onDelete} onUpdate={onUpdate} key={exercise._id} />)}
+                    {laps.map((lap) => <LapRow lap={lap} 
+                    onDelete={onDelete} onUpdate={onUpdate} key={lap._id} />)}
                 </tbody>
             </table>
         </div>
     );
 }
 
-export default ExerciseTable;
+export default LapTable;

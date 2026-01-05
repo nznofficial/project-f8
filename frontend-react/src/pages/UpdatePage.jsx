@@ -1,39 +1,39 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const UpdatePage = ({exerciseToUpdate}) => {
-    const [name, setName] = useState(exerciseToUpdate.name);
-    const [reps, setReps] = useState(exerciseToUpdate.reps);
-    const [weight, setWeight] = useState(exerciseToUpdate.weight);
-    const [unit, setUnit] = useState(exerciseToUpdate.unit);
-    const [date, setDate] = useState(exerciseToUpdate.date?.split('T')[0]);
+export const UpdatePage = ({lapToUpdate}) => {
+    const [name, setName] = useState(lapToUpdate.name);
+    const [reps, setReps] = useState(lapToUpdate.reps);
+    const [weight, setWeight] = useState(lapToUpdate.weight);
+    const [unit, setUnit] = useState(lapToUpdate.unit);
+    const [date, setDate] = useState(lapToUpdate.date?.split('T')[0]);
 
     const navigate = useNavigate();
 
-    const updateExercise = async (event) => {
+    const updateLap = async (event) => {
         event.preventDefault();
 
-        const updatedExercise = {name, reps, weight, unit, date}
+        const updatedLap = {name, reps, weight, unit, date}
 
         const response = await fetch(
-            `/exercises/${exerciseToUpdate._id}`, {
+            `/laps/${lapToUpdate._id}`, {
                 method: 'PUT',
                 headers: {'Content-type': 'application/json'},
-                body: JSON.stringify(updatedExercise)
+                body: JSON.stringify(updatedLap)
                 }
         );
         if(response.status === 200){
-            alert("Successfully updated the exercise");
+            alert("Successfully updated the lap");
         } else{
-            alert("Failed to update the exercise, status code = " + response.status)
+            alert("Failed to update the lap, status code = " + response.status)
         }
         navigate('/')
     };
 
     return (
         <>
-            <h2>Update Exercise</h2>
-            <form onSubmit={updateExercise}>
+            <h2>Update Lap</h2>
+            <form onSubmit={updateLap}>
                 <p>
                     <label>
                         Name:&nbsp;

@@ -9,29 +9,29 @@ import { useState } from 'react';
 
 function App() {
 
-  const [exerciseToUpdate, setExerciseToUpdate] = useState(null);
+  const [lapToUpdate, setLapToUpdate] = useState(null);
 
   return (
     <>
       <header>
-        <h1>Beaver Exercise Tracker</h1>
-        <p>Track your exercises</p>
+        <h1>Project F8 Tracker</h1>
+        <p>Track your laps</p>
       </header>
       <Router>
         <nav>
-          <Link to="/">View Exercises</Link>
-          <Link to="/create-exercise">Create Exercise</Link>
+          <Link to="/">View Laps</Link>
+          <Link to="/create-lap">Create Lap</Link>
         </nav>
         <main>
           <Routes>
-            <Route path="/" element={<RetrievePage setExerciseToUpdate={setExerciseToUpdate}/>}></Route>
-            <Route path="/create-exercise" element={ <CreatePage />}></Route>
-            <Route path="/update-exercise" element={ <UpdatePage exerciseToUpdate={exerciseToUpdate} />}></Route>
+            <Route path="/" element={<RetrievePage setLapToUpdate={setLapToUpdate}/>}></Route>
+            <Route path="/create-lap" element={ <CreatePage />}></Route>
+            <Route path="/update-lap" element={ <UpdatePage lapToUpdate={lapToUpdate} />}></Route>
           </Routes>
         </main>
       </Router>
       <footer>
-          <p>&copy; 2025 Emmanuel Vazquez</p>
+          <p>&copy; 2026 Chomp Entertainment</p>
       </footer>
     </>
   );

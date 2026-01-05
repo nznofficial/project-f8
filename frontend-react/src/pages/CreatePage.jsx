@@ -11,33 +11,33 @@ export const CreatePage = () => {
 
     const navigate = useNavigate();
 
-    const addExercise = async (event) => {
+    const addLap = async (event) => {
         event.preventDefault();
-        const newExercise = {name, reps, weight, unit}
+        const newLap = {name, reps, weight, unit}
 
         if (date){
-            newExercise.date = date;
+            newLap.date = date;
         }
 
         const response = await fetch(
-            '/exercises', {
+            '/laps', {
                 method: 'POST',
                 headers: {'Content-type': 'application/json'},
-                body: JSON.stringify(newExercise)
+                body: JSON.stringify(newLap)
                 }
         );
         if(response.status === 201){
-            alert("Successfully added the exercise");
+            alert("Successfully added the lap");
         } else{
-            alert("Failed to add exercise, status code = " + response.status)
+            alert("Failed to add lap, status code = " + response.status)
         }
         navigate('/')
     };
 
     return (
         <>
-            <h2>Create Exercise</h2>
-            <form onSubmit={addExercise}>
+            <h2>Create Lap</h2>
+            <form onSubmit={addLap}>
                 <p>
                     <label>
                         Name:&nbsp;

@@ -8,12 +8,14 @@ const LAP_COLLECTION = 'laps';
 const LAP_CLASS = 'Lap';
 const PITSTOP_COLLECTION = "pit_stops";
 const PITSTOP_CLASS = "PitStop";
+// const USER_COLLECTION = "users";
+// const USER_CLASS = "User";
 
 // Initialize undefined variables
 let connection = undefined;
 let Lap = undefined;
 let PitStop = undefined;
-
+// let User = undefined;
 
 /**
  * This function connects to the MongoDB server.
@@ -59,10 +61,22 @@ function createModel(){
 
     lapSchema.index({ userId: 1, date: 1 }, { unique: true });
 
-    return mongoose.model(LAP_CLASS, lapSchema);
+    return mongoose.model(LAP_CLASS, lapSchema, LAP_COLLECTION);
 }
 
-//Create PitStop model function
+// // Create users model function
+// function createModel() {
+//   const userSchema = mongoose.Schema({
+//     name: { type: String, required: true },
+//     sex: { type: String, enum: ["male", "female"], required: true },
+//     heightIn: { type: Number, min: 36, max: 96, required: true },
+//     active: { type: Boolean, default: true }
+//   });
+
+//   return mongoose.model(USER_CLASS, userSchema, USER_COLLECTION);
+// }
+
+// Create PitStop model function
 function createPitStopModel(){
     const pitStopSchema = mongoose.Schema({
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
@@ -75,7 +89,7 @@ function createPitStopModel(){
 
     pitStopSchema.index({userId: 1, weekStart: 1}, { unique: true });
 
-    return mongoose.model(PITSTOP_CLASS, pitStopSchema);
+    return mongoose.model(PITSTOP_CLASS, pitStopSchema, PITSTOP_COLLECTION);
 }
 
 // Create lap async function
@@ -84,10 +98,9 @@ async function createLap(userId, date, weightAmLb, steps, workout, calories, pro
     return await lap.save();
 }
 
-// Find laps async function
 async function findLaps(filter){
-    const lapArray = await Lap.find(filter).exec();
-    return lapArray;
+  const lapArray = await Lap.find(filter).exec();
+  return lapArray;
 }
 
 // Find laps by Id async function

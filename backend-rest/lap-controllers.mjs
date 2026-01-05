@@ -11,10 +11,10 @@ app.use(express.json())
 const PORT = process.env.PORT;
 
 // Validation
-function isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, adherence){
+function isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours){
     if (userId === undefined || date === undefined || weightAmLb === undefined|| 
         steps === undefined || workout === undefined || calories === undefined ||
-        proteinG === undefined || sleepHours === undefined || adherence === undefined
+        proteinG === undefined || sleepHours === undefined
         ) return false;
     if (!Number.isFinite(weightAmLb) || weightAmLb < 0) return false;
     if (!Number.isInteger(steps) || steps <= 0) return false;
@@ -40,14 +40,13 @@ app.post('/laps', asyncHandler(async (req, res) =>{
     const calories = req.body.calories
     const proteinG = req.body.proteinG
     const sleepHours = req.body.sleepHours
-    const adherence = req.body.adherence
     const notes = req.body.notes
 
-    if (!isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, adherence)){
+    if (!isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours)){
         return res.status(400).json({Error: 'Invalid request'})
     }
     
-    res.status(201).send(await laps.createLap(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, adherence, notes))
+    res.status(201).send(await laps.createLap(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, notes))
 }))
 
 
@@ -83,11 +82,10 @@ app.put('/laps/:_id', asyncHandler(async (req, res) => {
     const calories = req.body.calories
     const proteinG = req.body.proteinG
     const sleepHours = req.body.sleepHours
-    const adherence = req.body.adherence
     const notes = req.body.notes
     const updateObject = {}
 
-    if (!isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, adherence)){
+    if (!isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours)){
         return res.status(400).json({Error: 'Invalid request'})
     }
     if (userId !== undefined){
@@ -113,9 +111,6 @@ app.put('/laps/:_id', asyncHandler(async (req, res) => {
     }
     if (sleepHours !== undefined){
         updateObject.sleepHours = sleepHours
-    }
-    if (adherence !== undefined){
-        updateObject.adherence = adherence
     }
     if (notes !== undefined){
         updateObject.notes = notes

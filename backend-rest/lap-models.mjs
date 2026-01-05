@@ -49,7 +49,6 @@ function createModel(){
         calories: {type: Number, min: 0},
         proteinG: {type: Number, default: 0, min: 0},
         sleepHours: {type: Number, min: 0, max: 24},
-        adherence: {type: Boolean, required: true, default: true},
         notes: {type: String}
     });
 
@@ -59,8 +58,8 @@ function createModel(){
 }
 
 // Create lap async function
-async function createLap(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, adherence, notes){
-    const lap = new Lap({userId: userId, date: date, weightAmLb: weightAmLb, steps: steps, workout: workout, calories: calories, proteinG: proteinG, sleepHours: sleepHours, adherence: adherence, notes: notes});
+async function createLap(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, notes){
+    const lap = new Lap({userId: userId, date: date, weightAmLb: weightAmLb, steps: steps, workout: workout, calories: calories, proteinG: proteinG, sleepHours: sleepHours, notes: notes});
     return await lap.save();
 }
 

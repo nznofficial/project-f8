@@ -1,5 +1,5 @@
 // Get the mongoose object
-import mongoose from 'mongoose';
+import mongoose, { version } from 'mongoose';
 import 'dotenv/config';
 
 // Initialize consts
@@ -54,7 +54,8 @@ function createModel(){
         proteinG: {type: Number, default: 0, min: 0},
         sleepHours: {type: Number, min: 0, max: 24},
         notes: {type: String}
-    });
+    },
+    { versionKey: false});
 
     lapSchema.index({ userId: 1, date: 1 }, { unique: true });
 
@@ -67,8 +68,10 @@ function createPitStopModel(){
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
         weekStart: { type: Date, required: true},
         avgWeightLb: { type: Number, required: true},
+        weightChangeLb: { type: Number, required: true},
         isFinal: { type: Boolean, required: true, default: false }
-    });
+    },
+    { versionKey: false});
 
     pitStopSchema.index({userId: 1, weekStart: 1}, { unique: true });
 
@@ -128,13 +131,34 @@ async function computeAvgWeightForRange(userId, startDate, endDateExclusive) {
     return Number(result[0].avgWeightLb.toFixed(2));
   }
   
-  async function finalizePitStop(userId, weekStart, avgWeightLb) {
+async function finalizePitStop(userId, weekStart, avgWeightLb) {
+    // Find previous finalized week
+    const prevWeekStart = new Date(weekStart);
+    prevWeekStart.setDate(prevWeekStart.getDate() - 7);
+  
+    const prev = await PitStop.findOne({
+      userId,
+      weekStart: prevWeekStart,
+      isFinal: true
+    }).exec();
+  
+    const weightChangeLb = prev
+      ? Number((avgWeightLb - prev.avgWeightLb).toFixed(2))
+      : 0;
+  
     return await PitStop.findOneAndUpdate(
       { userId, weekStart },
-      { userId, weekStart, avgWeightLb, isFinal: true },
+      {
+        userId,
+        weekStart,
+        avgWeightLb,
+        weightChangeLb,
+        isFinal: true
+      },
       { upsert: true, new: true, runValidators: true }
     ).exec();
-  }
+}
+  
 
 // find Pit Stops
 async function findPitStops(filter) {

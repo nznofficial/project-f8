@@ -16,15 +16,14 @@ content-type: application/json
 
 {
     "userId": "69584ea973190aee8425e2ce",
-    "date": "2026-04-01",
+    "date": "2026-03-01",
     "weightAmLb": 202.6,
-    "steps": 8204,
+    "steps": 23194,
     "workout": "walk",
-    "calories": 1450,
-    "proteinG": 74,
+    "calories": 2019,
+    "proteinG": 167,
     "sleepHours": 10,
-    "adherence": true,
-    "notes": "Downtown Disney"
+    "notes": "Disneyland"
 }
 
 ### Did you remember to copy the ID value 

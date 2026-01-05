@@ -11,7 +11,13 @@ function LapTable({ laps, onDelete, onUpdate}) {
                         <th>Weight</th>
                         <th>Unit</th>
                         <th>Date</th>
-                        <th>Actions</th>
+                        <th>Weight</th>
+                        <th>Steps</th>
+                        <th>Workout</th>
+                        <th>Calories</th>
+                        <th>Protein</th>
+                        <th>sleepHours</th>
+                        <th>Notes</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -3,17 +3,21 @@ import { useNavigate } from 'react-router-dom';
 
 export const CreatePage = () => {
 
-    const [name, setName] = useState('');
-    const [reps, setReps] = useState(1);
-    const [weight, setWeight] = useState(0);
-    const [unit, setUnit] = useState('kgs');
+    const [userId, setUserId] = useState('');
     const [date, setDate] = useState('');
+    const [weightAmLb, setWeightAmLb] = useState('');
+    const [steps, setSteps] = useState(0);
+    const [workout, setWorkout] = useState('walk');
+    const [calories, setCalories] = useState(0);
+    const [proteinG, setProteinG] = useState(0);
+    const [sleepHours, setSleepHours] = useState(0);
+    const [notes, setNotes] = useState('');
 
     const navigate = useNavigate();
 
     const addLap = async (event) => {
         event.preventDefault();
-        const newLap = {name, reps, weight, unit}
+        const newLap = {userId, weightAmLb, steps, workout, calories, proteinG, sleepHours, notes}
 
         if (date){
             newLap.date = date;
@@ -40,45 +44,12 @@ export const CreatePage = () => {
             <form onSubmit={addLap}>
                 <p>
                     <label>
-                        Name:&nbsp;
-                        <input
-                            type="text"
-                            placeholder="Enter name here"
-                            value={name}
-                            onChange={e => setName(e.target.value)}/>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        Reps:&nbsp;
-                        <input
-                            type="number"
-                            min="1"
-                            value={reps}
-                            placeholder="Enter reps here"
-                            onChange={e => setReps(e.target.valueAsNumber)}/>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        Weight:&nbsp;
-                        <input
-                            type="number"
-                            min="0"
-                            value={weight}
-                            placeholder="Enter weight here"
-                            onChange={e => setWeight(e.target.valueAsNumber)}/>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        Unit:&nbsp;
+                        UserId:&nbsp;
                         <select
-                            value={unit}
-                            onChange={e => setUnit(e.target.value)}>
-                        <option value="kgs">kgs</option>
-                        <option value="lbs">lbs</option>
-                        <option value="miles">miles</option>
+                            value={userId}
+                            onChange={e => setUserId(e.target.value)}>
+                        <option value="69584ea973190aee8425e2ce">Tinkle Monkey</option>
+                        <option value="69584e8173190aee8425e2cd">Pookey Bear</option>
                         </select>
                     </label>
                 </p>
@@ -89,6 +60,86 @@ export const CreatePage = () => {
                             type="date"
                             value={date}
                             onChange={e => setDate(e.target.value)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Weight:&nbsp;
+                        <input
+                            type="number"
+                            min="50"
+                            max="500"
+                            value={weightAmLb}
+                            placeholder="Enter weight here"
+                            onChange={e => setWeightAmLb(e.target.value)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Steps:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            value={steps}
+                            placeholder="Enter steps here"
+                            onChange={e => setSteps(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Workout:&nbsp;
+                        <select
+                            value={workout}
+                            onChange={e => setWorkout(e.target.value)}>
+                        <option value="lift">lift</option>
+                        <option value="walk">walk</option>
+                        <option value="both">both</option>
+                        <option value="rest">rest</option>
+                        </select>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Calories:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            value={calories}
+                            placeholder="Enter calories here"
+                            onChange={e => setCalories(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Protein:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            value={proteinG}
+                            placeholder="Enter protein(g) here"
+                            onChange={e => setProteinG(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Sleep Hours:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            max="24"
+                            value={calories}
+                            placeholder="Enter sleep hours here"
+                            onChange={e => setSleepHours(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Notes:&nbsp;
+                        <input
+                            type="text"
+                            value={notes}
+                            placeholder="Enter notes here"
+                            onChange={e => setNotes(e.target.valueAsNumber)}/>
                     </label>
                 </p>
                 <button type="submit">Create</button>

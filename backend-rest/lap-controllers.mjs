@@ -4,11 +4,13 @@ import 'dotenv/config';
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import * as laps from './lap-models.mjs';
+import { localMidnight, mondayStartLocal, TZ } from "./utils/dates.mjs";
 
 const app = express();
 app.use(express.json())
 
 const PORT = process.env.PORT;
+
 
 // Validation
 function isBodyValid(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours){
@@ -136,6 +138,48 @@ app.delete('/laps/:_id', asyncHandler(async (req, res) =>{
     }
 }))
 
+
+//POST /pit-stops/preview
+app.post("/pit-stops/preview", asyncHandler(async (req, res) => {
+    const { userId } = req.body;
+    if (!userId) return res.status(400).json({ error: "userId is required" });
+  
+    const weekStart = mondayStartLocal(new Date());
+    const now = new Date(); // end exclusive
+  
+    const avgWeightLb = await laps.computeAvgWeightForRange(userId, weekStart, now);
+    if (avgWeightLb == null) return res.status(404).json({ error: "No laps found for current week." });
+  
+    res.status(200).json({ userId, weekStart, avgWeightLb, isFinal: false });
+  }));
+  
+//PUT /pit-stops/finalize
+app.put("/pit-stops/finalize", asyncHandler(async (req, res) => {
+    const { userId, weekStartLocal } = req.body;
+    if (!userId || !weekStartLocal) {
+      return res.status(400).json({ error: "userId and weekStartLocal (YYYY-MM-DD) required" });
+    }
+  
+    const weekStart = localMidnight(weekStartLocal);
+    const weekEndExclusive = new Date(weekStart);
+    weekEndExclusive.setDate(weekEndExclusive.getDate() + 7);
+  
+    const avgWeightLb = await laps.computeAvgWeightForRange(userId, weekStart, weekEndExclusive);
+    if (avgWeightLb == null) return res.status(404).json({ error: "No laps found for that week." });
+  
+    const saved = await laps.finalizePitStop(userId, weekStart, avgWeightLb);
+    res.status(200).json(saved);
+  }));
+
+// GET Pit Stops
+app.get("/pit-stops", asyncHandler(async (req, res) => {
+    const { userId } = req.query;
+    if (!userId) return res.status(400).json({ error: "userId is required" });
+  
+    const results = await laps.findPitStops({ userId });
+    res.status(200).json(results);
+  }));
+  
 
 app.listen(PORT, async () => {
     await laps.connect(false)

@@ -16,7 +16,7 @@ content-type: application/json
 
 {
     "userId": "69584ea973190aee8425e2ce",
-    "date": "2025-08-27",
+    "date": "2026-04-01",
     "weightAmLb": 202.6,
     "steps": 8204,
     "workout": "walk",
@@ -225,4 +225,26 @@ DELETE http://localhost:3000/laps/{{LAP_ID}} HTTP/1.1
 ### Body: Array must contain 3 exercises and must not contain the Deadlift document
 GET http://localhost:3000/laps HTTP/1.1
 
+
+### PIT STOP PREVIEW (current week avg weight so far)
+POST http://localhost:3000/pit-stops/preview
+content-type: application/json
+
+{
+  "userId": "69584ea973190aee8425e2ce"
+}
+
+
+### PIT STOP FINALIZE
+PUT http://localhost:3000/pit-stops/finalize
+content-type: application/json
+
+{
+  "userId": "69584ea973190aee8425e2ce",
+  "weekStartLocal": "2025-12-29"
+}
+
+
+### GET PIT STOPS (weekly summaries)
+GET http://localhost:3000/pit-stops?userId=69584ea973190aee8425e2ce
 

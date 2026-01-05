@@ -3,13 +3,16 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 
 // Initialize consts
-const LAP_DB_NAME = 'project_f8';
+const F8_DB_NAME = 'project_f8';
 const LAP_COLLECTION = 'laps';
 const LAP_CLASS = 'Lap';
+const PITSTOP_COLLECTION = "pit_stops";
+const PITSTOP_CLASS = "PitStop";
 
 // Initialize undefined variables
 let connection = undefined;
 let Lap = undefined;
+let PitStop = undefined;
 
 
 /**
@@ -22,8 +25,9 @@ async function connect(dropCollection){
         if(dropCollection){
             await connection.db.dropCollection(LAP_COLLECTION);
         }
-        // Create model
+        // Create models
         Lap = createModel();
+        PitStop = createPitStopModel();
     } catch(err){
         console.log(err);
         throw Error(`Could not connect to MongoDB ${err.message}`)
@@ -33,7 +37,7 @@ async function connect(dropCollection){
 // Create connection
 async function createConnection(){
     await mongoose.connect(process.env.MONGODB_CONNECT_STRING, 
-        {dbName: LAP_DB_NAME});
+        {dbName: F8_DB_NAME});
     return mongoose.connection;
 }
 
@@ -55,6 +59,20 @@ function createModel(){
     lapSchema.index({ userId: 1, date: 1 }, { unique: true });
 
     return mongoose.model(LAP_CLASS, lapSchema);
+}
+
+//Create PitStop model function
+function createPitStopModel(){
+    const pitStopSchema = mongoose.Schema({
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
+        weekStart: { type: Date, required: true},
+        avgWeightLb: { type: Number, required: true},
+        isFinal: { type: Boolean, required: true, default: false }
+    });
+
+    pitStopSchema.index({userId: 1, weekStart: 1}, { unique: true });
+
+    return mongoose.model(PITSTOP_CLASS, pitStopSchema);
 }
 
 // Create lap async function
@@ -93,5 +111,37 @@ async function deleteLapsById(id){
     return await query.exec();
 }
 
+// Weekly Logic
+async function computeAvgWeightForRange(userId, startDate, endDateExclusive) {
+    const pipeline = [
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(userId),
+          date: { $gte: startDate, $lt: endDateExclusive }
+        }
+      },
+      { $group: { _id: null, avgWeightLb: { $avg: "$weightAmLb" } } }
+    ];
+  
+    const result = await Lap.aggregate(pipeline).exec();
+    if (!result.length || result[0].avgWeightLb == null) return null;
+    return Number(result[0].avgWeightLb.toFixed(2));
+  }
+  
+  async function finalizePitStop(userId, weekStart, avgWeightLb) {
+    return await PitStop.findOneAndUpdate(
+      { userId, weekStart },
+      { userId, weekStart, avgWeightLb, isFinal: true },
+      { upsert: true, new: true, runValidators: true }
+    ).exec();
+  }
+
+// find Pit Stops
+async function findPitStops(filter) {
+    return await PitStop.find(filter).sort({ weekStart: 1 }).exec();
+  }
+  export { findPitStops };
+  
+
 // Export functions
-export { connect, createLap, findLaps, findLapsById, findLapUpdate, deleteLaps, deleteLapsById };
+export { connect, createLap, findLaps, findLapsById, findLapUpdate, deleteLaps, deleteLapsById, computeAvgWeightForRange, finalizePitStop };

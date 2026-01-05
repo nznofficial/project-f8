@@ -1,86 +1,381 @@
-body {
-    background-color: rgb(26, 22, 34);
-    color: rgb(119, 199, 236);
-    font-family: 'Helvetica', 'Arial Narrow Bold', sans-serif;
-    margin: 0% 0% 1% 0%;
-    padding: 1%
-}
+/* Project F8 — Race Control Theme
+   Clean, minimal, driver-POV telemetry vibe
+*/
 
-header {
-    padding: 2%;
-    background-color: aliceblue;
-    margin: 1% 0% 3% 0%;
-    color:rgb(42, 25, 14)
-}
-
-footer {
-    padding: 2%;
-    background-color: aliceblue;
-    margin: 0% 0% 1% 0%;
-    color:rgb(42, 25, 14)
-}
-
-main {
-    padding: 2%;
-    background-color: aliceblue;
-    margin: 3% 0% 3% 0%;
-    color:rgb(42, 25, 14)
-}
-
-nav a {
-    margin: 3% 0% 0% 0%;
-    padding: 2%;
-    color: rgb(242, 43, 43);
-    background-color: rgb(51, 51, 71);
-    border: 1px solid rgb(7, 0, 18);
-    font-family: 'Arial Narrow Bold', Helvetica, sans-serif;
-    text-decoration: none;
-}  
-nav a:hover {
-    margin: 3% 0% 0% 0%;
-    padding: 2%;
-    color: rgb(127, 230, 53);
-    background-color: rgb(30, 30, 50);
-    border: 1px solid rgb(7, 0, 18);
-    text-decoration: none;
-}
-
-h1, h2 {
-    color: red;
-    font-weight: bold; 
-}
-
-table {
-    border: 2px solid;
-    border-collapse: collapse;
-    margin: 1%;
-    border-width: 3px;
-    width: 100%;
-    max-width: 500px;
-    padding: 5%;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-thead {
-    border: 1px solid;
-    background-color: aliceblue;
-    height: 30px;
-    color: rgb(11, 1, 43);
-}
-tr th {
-    border: 1px solid;
-    padding: 3%;
-    color: rgb(11, 1, 43)
-}
-tr td {
-    border: 1px solid;
-    padding: 3%;
-    color: rgb(11, 1, 43);
+/* ---------- Design Tokens ---------- */
+:root {
+    --f8-black: #0B0D10;        /* deep race black */
+    --f8-charcoal: #161A20;     /* base panels */
+    --f8-panel: #1E232B;        /* cards / tables */
+    --f8-white: #F5F7FA;        /* primary text */
+    --f8-muted: #9AA4B2;        /* secondary text */
+    --f8-red: #C8102E;          /* Clippers red (accent only) */
+    --f8-blue: #1D428A;         /* Clippers blue (data accent only) */
+    --f8-border: #2A303A;
+  
+    --f8-radius: 10px;
+    --f8-radius-sm: 6px;
+  
+    --f8-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
+  
+  /* ---------- Global ---------- */
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  
+    background: radial-gradient(
+      1200px 600px at top,
+      #141821 0%,
+      var(--f8-black) 60%
+    );
+    color: var(--f8-white);
+  
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+  }
+  
+  main, header, footer {
+    width: min(1100px, calc(100% - 32px));
+    margin: 16px auto;
+  }
+  
+  /* ---------- Header (with optional logo alignment upgrade) ---------- */
+  header {
+    background: linear-gradient(to bottom, #11151C, var(--f8-black));
+    border: 1px solid var(--f8-border);
+    border-radius: var(--f8-radius);
+    box-shadow: var(--f8-shadow);
+    padding: 22px 24px;
+  
+    /* Optional alignment upgrade */
+    text-align: left;
+  }
+  
+  /* ---------- Main / Footer ---------- */
+  main {
+    background: var(--f8-charcoal);
+    border: 1px solid var(--f8-border);
+    border-radius: var(--f8-radius);
+    box-shadow: var(--f8-shadow);
+    padding: 22px 24px;
+  }
+  
+  footer {
+    background: transparent;
+    border-top: 1px solid var(--f8-border);
+    padding: 14px 24px;
+    color: var(--f8-muted);
     text-align: center;
-}
-
-input, button, select {
-    padding: 2%;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
+  }
+  
+  /* ---------- Typography ---------- */
+  h1, h2 {
+    margin: 0 0 12px 0;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--f8-white);
+  }
+  
+  h1 { font-size: 30px; }
+  h2 { font-size: 22px; }
+  
+  p {
+    color: var(--f8-muted);
+    margin: 6px 0 0 0;
+  }
+  
+  /* ---------- Brand (Logo + Title) ---------- */
+  .brand {
+    display: flex;
+    align-items: center;
+  
+    /* Optional alignment upgrade: logo + title anchored left */
+    justify-content: flex-start;
+  
+    gap: 16px;
+  }
+  
+  .brand-logo {
+    height: 150px;     /* bigger, intentional */
+    width: auto;
+    object-fit: contain;
+  }
+  
+  .brand-text h1 {
+    margin: 0;
+  }
+  
+  .brand-text p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--f8-muted);
+  }
+  
+  .brand-text h1 span {
+    color: var(--f8-red); /* red accent only on F8 */
+  }
+  
+  /* ---------- Navigation ---------- */
+  nav {
+    display: flex;
+    gap: 12px;
+  
+    /* Keep buttons centered even though brand is left-aligned */
+    justify-content: center;
+  
+    align-items: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 10px 16px;
+    border-radius: var(--f8-radius-sm);
+  
+    color: var(--f8-white);
+    background: transparent;
+    border: 1px solid var(--f8-border);
+  
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  
+    transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
+  }
+  
+  nav a:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+  }
+  
+  nav a:active {
+    transform: translateY(0px);
+  }
+  
+  /* Primary nav link “race red” (use className="primary" on ONE link) */
+  nav a.primary {
+    background: var(--f8-red);
+    border-color: transparent;
+    color: white;
+  }
+  
+  nav a.primary:hover {
+    filter: brightness(1.07);
+  }
+  
+  /* ---------- Forms / Inputs ---------- */
+  form {
+    display: grid;
+    gap: 12px;
+  }
+  
+  form p {
+    margin: 0;
+  }
+  
+  label {
+    display: block;
+    color: var(--f8-white);
+    font-weight: 600;
+  }
+  
+  input, select, button {
+    font-family: inherit;
+    font-size: 14px;
+  }
+  
+  input, select {
+    width: 100%;
+    max-width: 520px;
+  
+    padding: 10px 12px;
+    margin-top: 6px;
+  
+    background: var(--f8-panel);
+    color: var(--f8-white);
+  
+    border: 1px solid var(--f8-border);
+    border-radius: var(--f8-radius-sm);
+  
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  
+  input::placeholder {
+    color: rgba(245, 247, 250, 0.45);
+  }
+  
+  input:focus, select:focus {
+    border-color: rgba(200, 16, 46, 0.7); /* subtle red focus */
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.18);
+  }
+  
+  /* Buttons */
+  button {
+    padding: 10px 16px;
+    border-radius: var(--f8-radius-sm);
+    border: 1px solid var(--f8-border);
+    background: transparent;
+    color: var(--f8-white);
+  
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  
+    transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, filter 120ms ease;
+  }
+  
+  button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+  }
+  
+  button:active {
+    transform: translateY(0px);
+  }
+  
+  /* Optional primary button class: className="primary" */
+  button.primary {
+    background: var(--f8-red);
+    border-color: transparent;
+    color: white;
+  }
+  
+  button.primary:hover {
+    filter: brightness(1.07);
+  }
+  
+  /* ---------- Tables (Telemetry style) ---------- */
+  .table-wrap {
+    background: var(--f8-panel);
+    border: 1px solid var(--f8-border);
+    border-radius: var(--f8-radius);
+    padding: 16px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  thead th {
+    padding: 12px;
+    text-align: left;
+  
+    color: var(--f8-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  
+    border-bottom: 1px solid var(--f8-border);
+  }
+  
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--f8-border);
+    vertical-align: middle;
+    color: var(--f8-white);
+  }
+  
+  tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  
+  /* Helper classes you can add in JSX for “telemetry” feel */
+  .metric {
+    color: var(--f8-blue);
+    font-weight: 700;
+  }
+  
+  .date {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: var(--f8-muted);
+  }
+  
+  .notes {
+    color: var(--f8-muted);
+    font-style: italic;
+  }
+  
+  /* Actions column (edit/delete icons/buttons) */
+  .actions button,
+  .actions a {
+    background: transparent;
+    border: none;
+    padding: 6px 8px;
+    color: var(--f8-muted);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .actions button:hover,
+  .actions a:hover {
+    color: var(--f8-white);
+  }
+  
+  /* If App.css or component CSS is colliding with weird borders, this wins */
+  .table-wrap,
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    border-color: var(--f8-border) !important;
+  }
+  
+  /* ---------- Accessibility ---------- */
+  :focus-visible {
+    outline: 2px solid rgba(200, 16, 46, 0.7);
+    outline-offset: 2px;
+  }
+  
+  /* ---------- Mobile ---------- */
+  @media (max-width: 600px) {
+    main, header, footer {
+      width: calc(100% - 20px);
+      margin: 12px auto;
+      padding: 16px;
+    }
+  
+    /* Brand stacks on mobile for clean spacing */
+    .brand {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .brand-logo {
+      height: 199px;
+    }
+  
+    .brand-text h1 {
+      font-size: 26px;
+    }
+  
+    nav a {
+      flex: 1;
+      min-width: 140px;
+    }
+  
+    input, select, button {
+      width: 100%;
+    }
+  
+    button {
+      padding: 12px 16px;
+    }
+  }
+  

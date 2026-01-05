@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 export const CreatePage = () => {
 
-    const [userId, setUserId] = useState('');
+    const [userId, setUserId] = useState('69584ea973190aee8425e2ce');
     const [date, setDate] = useState('');
     const [weightAmLb, setWeightAmLb] = useState('');
     const [steps, setSteps] = useState(0);
-    const [workout, setWorkout] = useState('rest');
+    const [workout, setWorkout] = useState('walk');
     const [calories, setCalories] = useState('');
     const [proteinG, setProteinG] = useState('');
     const [sleepHours, setSleepHours] = useState('');

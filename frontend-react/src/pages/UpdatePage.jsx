@@ -2,18 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const UpdatePage = ({lapToUpdate}) => {
-    const [name, setName] = useState(lapToUpdate.name);
-    const [reps, setReps] = useState(lapToUpdate.reps);
-    const [weight, setWeight] = useState(lapToUpdate.weight);
-    const [unit, setUnit] = useState(lapToUpdate.unit);
+    const [userId, setUserId] = useState(lapToUpdate.userId);
     const [date, setDate] = useState(lapToUpdate.date?.split('T')[0]);
+    const [weightAmLb, setWeightAmLb] = useState(lapToUpdate.weightAmLb);
+    const [steps, setSteps] = useState(lapToUpdate.steps);
+    const [workout, setWorkout] = useState(lapToUpdate.workout);
+    const [calories, setCalories] = useState(lapToUpdate.calories);
+    const [proteinG, setProteinG] = useState(lapToUpdate.proteinG);
+    const [sleepHours, setSleepHours] = useState(lapToUpdate.sleepHours);
+    const [notes, setNotes] = useState(lapToUpdate.notes);
 
     const navigate = useNavigate();
 
     const updateLap = async (event) => {
         event.preventDefault();
 
-        const updatedLap = {name, reps, weight, unit, date}
+        const updatedLap = {userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, notes}
 
         const response = await fetch(
             `/laps/${lapToUpdate._id}`, {
@@ -36,42 +40,12 @@ export const UpdatePage = ({lapToUpdate}) => {
             <form onSubmit={updateLap}>
                 <p>
                     <label>
-                        Name:&nbsp;
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={e => setName(e.target.value)}/>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        Reps:&nbsp;
-                        <input
-                            type="number"
-                            min="1"
-                            value={reps}
-                            onChange={e => setReps(e.target.valueAsNumber)}/>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        Weight:&nbsp;
-                        <input
-                            type="number"
-                            min="0"
-                            value={weight}
-                            onChange={e => setWeight(e.target.valueAsNumber)}/>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        Unit:&nbsp;
+                        UserId:&nbsp;
                         <select
-                            value={unit}
-                            onChange={e => setUnit(e.target.value)}>
-                            <option value="kgs">kgs</option>
-                            <option value="lbs">lbs</option>
-                            <option value="miles">miles</option>
+                            value={userId}
+                            onChange={e => setUserId(e.target.value)}>
+                            <option value="69584ea973190aee8425e2ce">Tinkle Monkey</option>
+                            <option value="69584e8173190aee8425e2cd">Pookey Bear</option>
                         </select>
                     </label>
                 </p>
@@ -82,6 +56,80 @@ export const UpdatePage = ({lapToUpdate}) => {
                             type="date"
                             value={date}
                             onChange={e => setDate(e.target.value)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Weight:&nbsp;
+                        <input
+                            type="number"
+                            min="50"
+                            max="500"
+                            value={weightAmLb}
+                            onChange={e => setWeightAmLb(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Steps:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            value={steps}
+                            onChange={e => setSteps(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Workout:&nbsp;
+                        <select
+                            value={workout}
+                            onChange={e => setWorkout(e.target.value)}>
+                            <option value="lift">lift</option>
+                            <option value="walk">walk</option>
+                            <option value="both">both</option>
+                            <option value="rest">rest</option>
+                        </select>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Calories:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            value={calories}
+                            onChange={e => setCalories(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Protein:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            value={proteinG}
+                            onChange={e => setProteinG(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Sleep Hours:&nbsp;
+                        <input
+                            type="number"
+                            min="0"
+                            max="24"
+                            value={sleepHours}
+                            onChange={e => setSleepHours(e.target.valueAsNumber)}/>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Notes:&nbsp;
+                        <input
+                            type="text"
+                            value={notes}
+                            onChange={e => setNotes(e.target.value)}/>
                     </label>
                 </p>
                 <button type="submit">Update</button>

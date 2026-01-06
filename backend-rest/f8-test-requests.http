@@ -247,3 +247,11 @@ content-type: application/json
 ### GET PIT STOPS (weekly summaries)
 GET http://localhost:3000/pit-stops?userId=69584ea973190aee8425e2ce
 
+### Get Active Users
+GET http://localhost:3000/users?active=true
+
+### Laps from specific User
+GET http://localhost:3000/laps?userId=69584ea973190aee8425e2ce
+
+### Get Active Users
+GET http://localhost:3000/users

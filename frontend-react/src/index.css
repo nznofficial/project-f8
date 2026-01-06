@@ -610,6 +610,17 @@ td {
   }
 }
 
+/* Filter bar helper */
+.filter-bar {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0 18px;
+}
+
+.filter-bar select {
+  max-width: 420px;
+}
+
 /* ---------- SAFETY: never allow both views to be hidden ---------- */
 .laps-table { display: block !important; }
 .laps-cards { display: none !important; }

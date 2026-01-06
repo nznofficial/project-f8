@@ -5,9 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/laps': {
-      target: 'http://localhost:3000'
-      } 
-    }
-  }
+      '/laps': 'http://localhost:3000',
+      '/users': 'http://localhost:3000',
+      '/pit-stops': 'http://localhost:3000',
+      '/health': 'http://localhost:3000',
+    },
+  },
 })

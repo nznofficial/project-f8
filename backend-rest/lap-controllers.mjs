@@ -44,6 +44,17 @@ function isBodyValid(userId, date, weightAmLb, steps, workout, calories, protein
 // Health Check
 app.get("/health", (req, res) => res.status(200).send("ok"));
 
+//GET /users
+app.get('/users', asyncHandler(async (req, res) => {
+    const filter = {};
+  
+    // Optional: /users?active=true
+    if (req.query.active === 'true') filter.active = true;
+    if (req.query.active === 'false') filter.active = false;
+  
+    res.status(200).json(await laps.findUsers(filter));
+  }));
+  
 
 //POST /laps
 app.post('/laps', asyncHandler(async (req, res) =>{
@@ -67,10 +78,16 @@ app.post('/laps', asyncHandler(async (req, res) =>{
 
 //GET /laps
 app.get('/laps', asyncHandler(async (req, res) => {
-    const lap = req.query
-
-    res.send(await laps.findLaps(lap))
-}))
+    const filter = {};
+  
+    // If userId is provided, filter by it
+    if (req.query.userId) {
+      filter.userId = req.query.userId;
+    }
+  
+    res.status(200).json(await laps.findLaps(filter));
+  }));
+  
 
 
 //GET /laps/:_id
@@ -200,11 +217,17 @@ app.use(express.static(clientDistPath));
 // React Router fallback (Express 5 safe)
 // Don't intercept API routes
 app.get(/.*/, (req, res, next) => {
-    if (req.path.startsWith("/laps") || req.path.startsWith("/pit-stops") || req.path.startsWith("/health")) {
+    if (
+      req.path.startsWith("/laps") ||
+      req.path.startsWith("/pit-stops") ||
+      req.path.startsWith("/users") ||   // ✅ add this
+      req.path.startsWith("/health")
+    ) {
       return next();
     }
+  
     res.sendFile(path.join(clientDistPath, "index.html"));
-    });
+  });
   
   
 app.listen(PORT, async () => {

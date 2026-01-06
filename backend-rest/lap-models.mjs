@@ -72,7 +72,7 @@ function createUserModel() {
     sex: { type: String, enum: ["male", "female"], required: true },
     heightIn: { type: Number, min: 36, max: 96, required: true },
     active: { type: Boolean, default: true }
-  });
+  }, { versionKey: false });
 
   return mongoose.model(USER_CLASS, userSchema, USER_COLLECTION);
 }
@@ -97,6 +97,10 @@ function createPitStopModel(){
 async function createLap(userId, date, weightAmLb, steps, workout, calories, proteinG, sleepHours, notes){
     const lap = new Lap({userId: userId, date: date, weightAmLb: weightAmLb, steps: steps, workout: workout, calories: calories, proteinG: proteinG, sleepHours: sleepHours, notes: notes});
     return await lap.save();
+}
+
+async function findUsers(filter = {}) {
+  return await User.find(filter).sort({ name: 1 }).exec();
 }
 
 async function findLaps(filter) {
@@ -184,4 +188,4 @@ async function findPitStops(filter) {
   
 
 // Export functions
-export { connect, createLap, findLaps, findLapsById, findLapUpdate, deleteLaps, deleteLapsById, computeAvgWeightForRange, finalizePitStop };
+export { connect, createLap, findLaps, findLapsById, findLapUpdate, deleteLaps, deleteLapsById, computeAvgWeightForRange, finalizePitStop, findUsers };

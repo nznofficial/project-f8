@@ -4,12 +4,20 @@ import 'dotenv/config';
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import * as laps from './lap-models.mjs';
-import { localMidnight, mondayStartLocal, TZ } from "./utils/dates.mjs";
+import { localMidnight, mondayStartLocal, TZ } from './utils/dates.mjs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 app.use(express.json())
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Vite build output lives here:
+const clientDistPath = path.join(__dirname, "..", "frontend-react", "dist");
 
 
 // Validation
@@ -179,7 +187,16 @@ app.get("/pit-stops", asyncHandler(async (req, res) => {
     const results = await laps.findPitStops({ userId });
     res.status(200).json(results);
   }));
+
   
+// Serve React build (Vite)
+app.use(express.static(clientDistPath));
+
+// React Router fallback (so /create-lap loads on refresh)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientDistPath, "index.html"));
+});
+
 
 app.listen(PORT, async () => {
     await laps.connect(false)

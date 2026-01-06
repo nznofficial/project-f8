@@ -198,7 +198,7 @@ app.get("/pit-stops", asyncHandler(async (req, res) => {
 app.use(express.static(clientDistPath));
 
 // React Router fallback (so /create-lap loads on refresh)
-app.get("*", (req, res, next) => {
+app.get("/*", (req, res, next) => {
     // If it's an API call and it wasn't matched, let it 404 as JSON or default
     if (req.path.startsWith("/laps") || req.path.startsWith("/pit-stops")) return next();
   

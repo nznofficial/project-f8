@@ -621,6 +621,120 @@ td {
   max-width: 420px;
 }
 
+/* ---------- Success Overlay (Lap Created) ---------- */
+.f8-success {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+}
+
+.f8-success__scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 500px at 50% 35%, rgba(200,16,46,0.18), rgba(0,0,0,0.78));
+  backdrop-filter: blur(4px);
+}
+
+.f8-success__content {
+  position: relative;
+  width: min(720px, calc(100% - 40px));
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+    radial-gradient(900px 180px at 50% 0%, rgba(200,16,46,0.28), transparent 60%);
+  padding: 28px 22px 26px;
+  text-align: center;
+  overflow: hidden;
+  animation: f8-pop-in 260ms ease-out both;
+}
+
+@keyframes f8-pop-in {
+  from { transform: translateY(10px) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.f8-success__logo {
+  width: min(420px, 82vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 35px rgba(0,0,0,0.55));
+  transform-origin: center;
+  animation: f8-logo-hit 900ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+@keyframes f8-logo-hit {
+  0%   { transform: scale(0.70) rotate(-6deg); opacity: 0; }
+  45%  { transform: scale(1.06) rotate(1deg); opacity: 1; }
+  70%  { transform: scale(0.98) rotate(0deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.f8-success__title {
+  margin-top: 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: rgba(245,247,250,0.92);
+}
+
+.f8-success__sub {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(245,247,250,0.62);
+}
+
+.f8-success__content::before {
+  content: "";
+  position: absolute;
+  inset: -60% -30%;
+  background: linear-gradient(120deg, transparent 42%, rgba(255,255,255,0.12) 50%, transparent 58%);
+  transform: translateX(-35%);
+  animation: f8-success-scan 1.15s ease-in-out both;
+  pointer-events: none;
+}
+
+@keyframes f8-success-scan {
+  0%   { transform: translateX(-45%) rotate(0.0001deg); opacity: 0.0; }
+  30%  { opacity: 0.6; }
+  100% { transform: translateX(45%)  rotate(0.0001deg); opacity: 0.0; }
+}
+
+.f8-success__flag {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: 0;
+  height: 12px;
+  opacity: 0.9;
+  background: linear-gradient(90deg, rgba(255,255,255,0.85) 0 14px, rgba(0,0,0,0) 14px 28px);
+  background-size: 28px 12px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  transform: translateX(-30%);
+  animation: f8-flag-sweep 700ms ease-out 120ms both;
+}
+
+@keyframes f8-flag-sweep {
+  from { transform: translateX(-45%); opacity: 0; }
+  to   { transform: translateX(0%); opacity: 0.95; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .f8-success__content,
+  .f8-success__logo,
+  .f8-success__content::before,
+  .f8-success__flag {
+    animation: none !important;
+  }
+}
+
+
 /* ---------- SAFETY: never allow both views to be hidden ---------- */
 .laps-table { display: block !important; }
 .laps-cards { display: none !important; }

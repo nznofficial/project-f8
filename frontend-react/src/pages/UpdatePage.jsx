@@ -65,6 +65,7 @@ export const UpdatePage = ({lapToUpdate}) => {
                             type="number"
                             min="50"
                             max="500"
+                            step="0.1"
                             value={weightAmLb}
                             onChange={e => setWeightAmLb(e.target.valueAsNumber)}/>
                     </label>

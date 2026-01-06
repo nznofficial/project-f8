@@ -8,14 +8,14 @@ const LAP_COLLECTION = 'laps';
 const LAP_CLASS = 'Lap';
 const PITSTOP_COLLECTION = "pit_stops";
 const PITSTOP_CLASS = "PitStop";
-// const USER_COLLECTION = "users";
-// const USER_CLASS = "User";
+const USER_COLLECTION = "users";
+const USER_CLASS = "User";
 
 // Initialize undefined variables
 let connection = undefined;
 let Lap = undefined;
 let PitStop = undefined;
-// let User = undefined;
+let User = undefined;
 
 /**
  * This function connects to the MongoDB server.
@@ -29,6 +29,7 @@ async function connect(dropCollection){
         }
         // Create models
         Lap = createModel();
+        User = createUserModel();
         PitStop = createPitStopModel();
     } catch(err){
         console.log(err);
@@ -64,17 +65,17 @@ function createModel(){
     return mongoose.model(LAP_CLASS, lapSchema, LAP_COLLECTION);
 }
 
-// // Create users model function
-// function createModel() {
-//   const userSchema = mongoose.Schema({
-//     name: { type: String, required: true },
-//     sex: { type: String, enum: ["male", "female"], required: true },
-//     heightIn: { type: Number, min: 36, max: 96, required: true },
-//     active: { type: Boolean, default: true }
-//   });
+// Create users model function
+function createUserModel() {
+  const userSchema = mongoose.Schema({
+    name: { type: String, required: true },
+    sex: { type: String, enum: ["male", "female"], required: true },
+    heightIn: { type: Number, min: 36, max: 96, required: true },
+    active: { type: Boolean, default: true }
+  });
 
-//   return mongoose.model(USER_CLASS, userSchema, USER_COLLECTION);
-// }
+  return mongoose.model(USER_CLASS, userSchema, USER_COLLECTION);
+}
 
 // Create PitStop model function
 function createPitStopModel(){
@@ -98,9 +99,11 @@ async function createLap(userId, date, weightAmLb, steps, workout, calories, pro
     return await lap.save();
 }
 
-async function findLaps(filter){
-  const lapArray = await Lap.find(filter).exec();
-  return lapArray;
+async function findLaps(filter) {
+  return await Lap
+    .find(filter)
+    .populate("userId", "name") // only bring back name
+    .exec();
 }
 
 // Find laps by Id async function

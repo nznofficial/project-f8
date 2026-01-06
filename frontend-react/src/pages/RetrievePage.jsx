@@ -48,7 +48,7 @@ function RetrievePage({ setLapToUpdate }) {
                 <div className="lap-card-top">
                 <div>
                     <div className="lap-card-user">
-                    {lap.userName ?? lap.userId}
+                    {lap.userName ?? lap.userId?.name}
                     </div>
                     <div className="lap-card-date">{dateStr}</div>
                 </div>

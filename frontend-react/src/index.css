@@ -609,3 +609,12 @@ td {
     padding: 10px 12px;
   }
 }
+
+/* ---------- SAFETY: never allow both views to be hidden ---------- */
+.laps-table { display: block !important; }
+.laps-cards { display: none !important; }
+
+@media (max-width: 700px) {
+  .laps-table { display: none !important; }
+  .laps-cards { display: grid !important; }
+}

@@ -1,6 +1,6 @@
 //vazqueem - Emmanuel Vazquez
 
-import './App.css';
+import './index.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RetrievePage from './pages/RetrievePage';
 import CreatePage from './pages/CreatePage';

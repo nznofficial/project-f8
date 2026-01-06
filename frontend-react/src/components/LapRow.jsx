@@ -1,10 +1,10 @@
-import '../App.css';
+import '../index.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function LapRow({ lap, onDelete, onUpdate }) {
     return (
         <tr>
-            <td>{lap.userId}</td>
+            <td>{lap.userId?.name}</td>
             <td>{lap.date?.split('T')[0]}</td>
             <td>{lap.weightAmLb}</td>
             <td>{lap.steps}</td>

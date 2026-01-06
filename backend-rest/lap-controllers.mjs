@@ -9,7 +9,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -38,6 +40,9 @@ function isBodyValid(userId, date, weightAmLb, steps, workout, calories, protein
     }
     return true;
 }
+
+// Health Check
+app.get("/health", (req, res) => res.status(200).send("ok"));
 
 
 //POST /laps
@@ -193,10 +198,13 @@ app.get("/pit-stops", asyncHandler(async (req, res) => {
 app.use(express.static(clientDistPath));
 
 // React Router fallback (so /create-lap loads on refresh)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(clientDistPath, "index.html"));
-});
-
+app.get("*", (req, res, next) => {
+    // If it's an API call and it wasn't matched, let it 404 as JSON or default
+    if (req.path.startsWith("/laps") || req.path.startsWith("/pit-stops")) return next();
+  
+    res.sendFile(path.join(clientDistPath, "index.html"));
+  });
+  
 
 app.listen(PORT, async () => {
     await laps.connect(false)

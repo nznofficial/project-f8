@@ -5,17 +5,20 @@
   "main": "lap-controllers.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon lap-controllers.mjs"
+    "dev": "nodemon lap-controllers.mjs",
+    "start": "node lap-controllers.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-async-handler": "^1.2.0",
-    "mongoose": "^9.0.1",
+    "mongoose": "^9.0.1"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.11"
   }
 }

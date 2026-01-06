@@ -197,15 +197,16 @@ app.get("/pit-stops", asyncHandler(async (req, res) => {
 // Serve React build (Vite)
 app.use(express.static(clientDistPath));
 
-// React Router fallback (so /create-lap loads on refresh)
-app.get("/*", (req, res, next) => {
-    // If it's an API call and it wasn't matched, let it 404 as JSON or default
-    if (req.path.startsWith("/laps") || req.path.startsWith("/pit-stops")) return next();
-  
+// React Router fallback (Express 5 safe)
+// Don't intercept API routes
+app.get(/.*/, (req, res, next) => {
+    if (req.path.startsWith("/laps") || req.path.startsWith("/pit-stops") || req.path.startsWith("/health")) {
+      return next();
+    }
     res.sendFile(path.join(clientDistPath, "index.html"));
-  });
+    });
   
-
+  
 app.listen(PORT, async () => {
     await laps.connect(false)
     console.log(`Project F8 backend running on port ${PORT}`);

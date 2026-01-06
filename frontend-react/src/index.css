@@ -94,7 +94,7 @@ p {
 }
 
 .brand-logo {
-  height: 150px;     /* bigger, intentional */
+  height: 150px;
   width: auto;
   object-fit: contain;
 }
@@ -155,7 +155,7 @@ nav a.primary {
 nav a.primary:hover { filter: brightness(1.07); }
 
 /* ---------- Countdown (Telemetry Card + Checkered Divider) ---------- */
-/* Add this JSX class logic:
+/* JSX:
    <div className={`countdown ${daysLeft < 7 ? "race-week" : ""}`}> ... </div>
 */
 .countdown {
@@ -184,7 +184,6 @@ nav a.primary:hover { filter: brightness(1.07); }
   overflow: hidden;
 }
 
-/* subtle scan/glow */
 .countdown::before {
   content: "";
   position: absolute;
@@ -206,7 +205,6 @@ nav a.primary:hover { filter: brightness(1.07); }
   100% { transform: translateX(-45%) rotate(0.0001deg); opacity: 0.35; }
 }
 
-/* tiny checkered-flag divider strip */
 .countdown::after {
   content: "";
   position: absolute;
@@ -225,7 +223,6 @@ nav a.primary:hover { filter: brightness(1.07); }
   border-top: 1px solid rgba(255,255,255,0.07);
 }
 
-/* left block: label + date subline */
 .countdown-left {
   display: flex;
   flex-direction: column;
@@ -247,7 +244,6 @@ nav a.primary:hover { filter: brightness(1.07); }
   color: rgba(245,247,250,0.55);
 }
 
-/* right block: number + unit */
 .countdown-value {
   display: flex;
   align-items: baseline;
@@ -271,7 +267,6 @@ nav a.primary:hover { filter: brightness(1.07); }
   color: rgba(245,247,250,0.62);
 }
 
-/* Race Week mode (under 7 days) */
 .countdown.race-week {
   background:
     linear-gradient(180deg, rgba(200,16,46,0.22), rgba(255,255,255,0.02)),
@@ -304,7 +299,7 @@ form {
   gap: 12px;
 }
 
-form p { margin: 0; }
+form p { margin: 0; overflow: hidden;}
 
 label {
   display: block;
@@ -341,8 +336,22 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.18);
 }
 
-/* iPhone date input overflow guard */
-input[type="date"] { max-width: 100%; }
+/* ---------- iOS Date Input FIX (required) ---------- */
+input[type="date"] {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  -webkit-appearance: none;
+  appearance: none;
+
+  box-sizing: border-box;
+}
+
+/* Additional guard for iOS form controls */
+input, select {
+  min-width: 0;
+}
 
 /* Buttons */
 button {
@@ -465,15 +474,14 @@ td {
     padding: 16px;
   }
 
-  /* Brand stacks on mobile */
   .brand {
     flex-direction: column;
-    align-items: center; /* center logo + title */
+    align-items: center;
     text-align: center;
     gap: 10px;
   }
 
-  .brand-logo { height: 210px; } /* bigger + centered on iPhone */
+  .brand-logo { height: 210px; }
 
   .brand-text h1 { font-size: 26px; }
 
@@ -486,9 +494,118 @@ td {
 
   button { padding: 12px 16px; }
 
-  /* Countdown stacks nicely */
   .countdown {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+}
+
+/* ---------- View Laps: Responsive (Table -> Cards) ---------- */
+.laps-cards { display: none; }
+.laps-table { display: block; }
+
+@media (max-width: 700px) {
+  .laps-table { display: none; }
+  .laps-cards { display: grid; gap: 12px; }
+
+  .lap-card {
+    background: var(--f8-panel);
+    border: 1px solid var(--f8-border);
+    border-radius: var(--f8-radius);
+    padding: 14px;
+  }
+
+  .lap-card-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+/* underline (red light) matches the name width */
+.lap-card-user {
+  display: inline-flex;          /* shrink-wrap to text */
+  flex-direction: column;        /* stack text + underline */
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.lap-card-user::after {
+  content: "";
+  display: block;
+  width: 100%;                   /* match text width */
+  height: 2px;
+  background: var(--f8-red);
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+
+  .lap-card-date {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: var(--f8-muted);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .lap-card-workout {
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--f8-border);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .lap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+  }
+
+  .lap-metric {
+    border: 1px solid var(--f8-border);
+    border-radius: var(--f8-radius-sm);
+    padding: 10px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .lap-metric .k {
+    color: var(--f8-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .lap-metric .v {
+    color: var(--f8-white);
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1.1;
+  }
+
+  .lap-metric .v .unit {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--f8-muted);
+    margin-left: 6px;
+  }
+
+  .lap-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255,255,255,0.12);
+  }
+
+  .lap-card-actions button {
+    width: auto;
+    padding: 10px 12px;
   }
 }

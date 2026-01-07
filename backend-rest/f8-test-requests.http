@@ -46,7 +46,6 @@ content-type: application/json
     "calories": 1250,
     "proteinG": 60,
     "sleepHours": 9,
-    "adherence": false,
     "notes": "Downtown Disney"
 }
 
@@ -65,7 +64,6 @@ content-type: application/json
     "calories": 1450,
     "proteinG": 74,
     "sleepHours": 10,
-    "adherence": true,
     "notes": "Downtown Disney"
 }
 
@@ -84,7 +82,6 @@ content-type: application/json
     "calories": 1750,
     "proteinG": 44,
     "sleepHours": 8,
-    "adherence": false,
     "notes": "New Years"
 }
 
@@ -103,7 +100,6 @@ content-type: application/json
     "calories": 1750,
     "proteinG": 44,
     "sleepHours": 8,
-    "adherence": false,
     "notes": "New Years"
 }
 
@@ -122,7 +118,6 @@ content-type: application/json
     "calories": 1750,
     "proteinG": 44,
     "sleepHours": 8,
-    "adherence": false,
     "notes": "New Years"
 }
 
@@ -141,7 +136,6 @@ content-type: application/json
     "calories": 1750,
     "proteinG": 44,
     "sleepHours": 8,
-    "adherence": false,
     "notes": "New Years"
 }
 
@@ -182,7 +176,6 @@ content-type: application/json
     "calories": 1750,
     "proteinG": 44,
     "sleepHours": 8,
-    "adherence": false,
     "notes": "New Years"
 }
 
@@ -207,7 +200,6 @@ content-type: application/json
     "calories": 1750,
     "proteinG": 44,
     "sleepHours": 8,
-    "adherence": false,
     "notes": "New Years"
 }
 
@@ -254,4 +246,5 @@ GET http://localhost:3000/users?active=true
 GET http://localhost:3000/laps?userId=69584ea973190aee8425e2ce
 
 ### Get Active Users
+
 GET http://localhost:3000/users

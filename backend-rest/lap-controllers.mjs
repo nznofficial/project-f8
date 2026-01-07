@@ -220,7 +220,7 @@ app.get(/.*/, (req, res, next) => {
     if (
       req.path.startsWith("/laps") ||
       req.path.startsWith("/pit-stops") ||
-      req.path.startsWith("/users") ||   // ✅ add this
+      req.path.startsWith("/users") ||
       req.path.startsWith("/health")
     ) {
       return next();

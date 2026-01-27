@@ -168,7 +168,6 @@ app.delete('/laps/:_id', asyncHandler(async (req, res) =>{
     }
 }))
 
-
 //POST /pit-stops/preview
 app.post("/pit-stops/preview", asyncHandler(async (req, res) => {
     const { userId } = req.body;

@@ -78,6 +78,7 @@ export const CreatePage = () => {
             <select value={userId} onChange={(e) => setUserId(e.target.value)}>
               <option value="69584ea973190aee8425e2ce">Tinkle Monkey</option>
               <option value="69584e8173190aee8425e2cd">Pookey Bear</option>
+              <option value="69785c19e021df4df1d6fc3a">Glitch Matrix</option>
             </select>
           </label>
         </p>

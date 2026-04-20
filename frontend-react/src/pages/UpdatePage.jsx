@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const UpdatePage = ({lapToUpdate}) => {
-    const [userId, setUserId] = useState(lapToUpdate.userId);
+    const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState(lapToUpdate.userId._id);
     const [date, setDate] = useState(lapToUpdate.date?.split('T')[0]);
     const [weightAmLb, setWeightAmLb] = useState(lapToUpdate.weightAmLb);
     const [steps, setSteps] = useState(lapToUpdate.steps);
@@ -13,6 +14,12 @@ export const UpdatePage = ({lapToUpdate}) => {
     const [notes, setNotes] = useState(lapToUpdate.notes);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch('/users?active=true')
+            .then(res => res.json())
+            .then(data => setUsers(Array.isArray(data) ? data : []));
+    }, []);
 
     const updateLap = async (event) => {
         event.preventDefault();
@@ -44,9 +51,7 @@ export const UpdatePage = ({lapToUpdate}) => {
                         <select
                             value={userId}
                             onChange={e => setUserId(e.target.value)}>
-                            <option value="69584ea973190aee8425e2ce">Tinkle Monkey</option>
-                            <option value="69584e8173190aee8425e2cd">Pookey Bear</option>
-                            <option value="69785c19e021df4df1d6fc3a">Glitch Matrix</option>
+                            {users.map(u => <option key={u._id} value={u._id}>{u.name}</option>)}
                         </select>
                     </label>
                 </p>

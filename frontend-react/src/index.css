@@ -743,3 +743,59 @@ td {
   .laps-table { display: none !important; }
   .laps-cards { display: grid !important; }
 }
+
+/* ---------- Weekly / Pit Stops ---------- */
+.pitstop-section {
+  margin-bottom: 2rem;
+}
+
+.pitstop-section h3 {
+  color: var(--f8-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.pitstop-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pitstop-change--loss { color: #4caf7d; }
+.pitstop-change--gain { color: var(--f8-red); }
+
+.pitstop-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--f8-border);
+}
+
+.pitstop-badge--final {
+  background: rgba(76, 175, 125, 0.15);
+  color: #4caf7d;
+  border-color: #4caf7d;
+}
+
+.pitstop-badge--preview {
+  background: rgba(200, 16, 46, 0.1);
+  color: var(--f8-muted);
+}
+
+.pitstop-error {
+  color: var(--f8-red);
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.pitstop-empty {
+  color: var(--f8-muted);
+  font-style: italic;
+}

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/project-f8-logo.png";
 import { useEffect, useMemo, useState } from "react";
 
@@ -55,10 +55,15 @@ export default function Header() {
       </div>
 
       <nav>
-        <Link to="/" className="primary">
+        <NavLink to="/" end className={({ isActive }) => isActive ? 'primary' : undefined}>
           View Laps
-        </Link>
-        <Link to="/create-lap">Create Lap</Link>
+        </NavLink>
+        <NavLink to="/create-lap" className={({ isActive }) => isActive ? 'primary' : undefined}>
+          Create Lap
+        </NavLink>
+        <NavLink to="/weekly" className={({ isActive }) => isActive ? 'primary' : undefined}>
+          Weekly
+        </NavLink>
       </nav>
 
       {/* Countdown */}

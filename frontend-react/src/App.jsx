@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RetrievePage from './pages/RetrievePage';
 import CreatePage from './pages/CreatePage';
 import UpdatePage from './pages/UpdatePage';
+import WeeklyPage from './pages/WeeklyPage';
 import { useState } from 'react';
 import Header from './components/Header';
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<RetrievePage setLapToUpdate={setLapToUpdate}/>}></Route>
             <Route path="/create-lap" element={ <CreatePage />}></Route>
             <Route path="/update-lap" element={ <UpdatePage lapToUpdate={lapToUpdate} />}></Route>
+            <Route path="/weekly" element={<WeeklyPage />}></Route>
           </Routes>
 
         </main>

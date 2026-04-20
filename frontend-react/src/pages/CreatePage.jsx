@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/project-f8-logo.png';
 
 export const CreatePage = () => {
-  const [userId, setUserId] = useState('69584ea973190aee8425e2ce');
+  const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState('');
   const [date, setDate] = useState('');
   const [weightAmLb, setWeightAmLb] = useState('');
   const [steps, setSteps] = useState(0);
@@ -17,6 +18,16 @@ export const CreatePage = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/users?active=true')
+      .then(res => res.json())
+      .then(data => setUsers(Array.isArray(data) ? data : []));
+  }, []);
+
+  useEffect(() => {
+    if (users.length > 0) setUserId(users[0]._id);
+  }, [users]);
 
   const addLap = async (event) => {
     event.preventDefault();
@@ -76,9 +87,7 @@ export const CreatePage = () => {
           <label>
             UserId:&nbsp;
             <select value={userId} onChange={(e) => setUserId(e.target.value)}>
-              <option value="69584ea973190aee8425e2ce">Tinkle Monkey</option>
-              <option value="69584e8173190aee8425e2cd">Pookey Bear</option>
-              <option value="69785c19e021df4df1d6fc3a">Glitch Matrix</option>
+              {users.map(u => <option key={u._id} value={u._id}>{u.name}</option>)}
             </select>
           </label>
         </p>
